@@ -1,0 +1,23 @@
+package POJO;
+
+public class Mobile {
+	static String courseTitle;
+	static String price;
+
+	public static String getCourseTitle() {
+		return courseTitle;
+	}
+
+	public static void setCourseTitle(String courseTitle) {
+		Mobile.courseTitle = courseTitle;
+	}
+
+	public static String getPrice() {
+		return price;
+	}
+
+	public static void setPrice(String price) {
+		Mobile.price = price;
+	}
+
+}

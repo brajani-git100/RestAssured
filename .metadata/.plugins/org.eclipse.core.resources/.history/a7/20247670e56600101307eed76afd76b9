@@ -1,0 +1,32 @@
+package OAuth;
+
+import org.testng.annotations.Test;
+
+import POJO.getCourse;
+import io.restassured.path.json.JsonPath;
+
+import static io.restassured.RestAssured.*;
+
+public class OAuthRequest {
+
+	@Test
+	public void getAccessToken() {
+		String Response = given()
+				.formParam("client_id", "692183103107-p0m7ent2hk7suguv4vq22hjcfhcr43pj.apps.googleusercontent.com")
+				.formParam("client_secret", "erZOWM9g3UtwNRj340YYaK_W").formParam("grant_type", "client_credentials")
+				.formParam("scope", "trust")
+
+				.when().post("https://rahulshettyacademy.com/oauthapi/oauth2/resourceOwner/token").asString();
+
+		JsonPath js = new JsonPath(Response);
+		String accessToken = js.getString("access_token");
+
+		getCourse gc = given().queryParam("access_token", accessToken).when().log().all()
+				.get("https://rahulshettyacademy.com/oauthapi/getCourseDetails").as(POJO.getCourse.class);
+
+		//System.out.println(Response2);
+		System.out.println(gc.getLinkedIn());
+		System.out.println(gc.getCourses().getMobile().get(2).getCourseTitle());
+	}
+
+}
